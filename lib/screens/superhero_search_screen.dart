@@ -44,7 +44,20 @@ class _SuperheroSearchScreenState extends State<SuperheroSearchScreen> {
             }else if(snapshot.hasError){
               return Text("Error: ${snapshot.error}");
             }else if(snapshot.hasData){
-              return Text("${snapshot.data?.response}");
+              var superheroList = snapshot.data?.result;
+              return SizedBox(
+                height: 300,
+                child: ListView.builder(
+                  itemCount: superheroList?.length ?? 0, 
+                  itemBuilder: (contaext, index){
+                    if(superheroList != null){
+                      return Text(superheroList[index].name);
+                    }else{
+                      return Text("");
+                    }
+                  }
+                ),
+              );
             }else{
               return Text("No results found");
             }
