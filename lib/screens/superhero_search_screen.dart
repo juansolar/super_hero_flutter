@@ -17,7 +17,19 @@ class _SuperheroSearchScreenState extends State<SuperheroSearchScreen> {
       ),
       body: Column(
         children: [
-          Text("Super Hero Search")
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Search Super Hero",
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder()
+              ),
+              onChanged: (text){
+                print(text);
+              },
+            ),
+          )
         ],
       ),
     );
