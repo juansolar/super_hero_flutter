@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:superhero_app/data/model/super_hero_response.dart';
 import 'package:superhero_app/data/model/superhero_details_response.dart';
 import 'package:superhero_app/data/repository.dart';
+import 'package:superhero_app/screens/superhero_detail_screen.dart';
 
 class SuperheroSearchScreen extends StatefulWidget {
   const SuperheroSearchScreen({super.key});
@@ -75,26 +76,36 @@ class _SuperheroSearchScreenState extends State<SuperheroSearchScreen> {
     );
   }
 
-  Column itemSuperhero(SuperheroDetailsResponse item) => Column(
-    children: [
-      Image.network(
-        item.url,
-        height: 250,
-        width: double.infinity,
-        fit: BoxFit.cover,
-        alignment: Alignment(0, -0.6),
-        //En caso de que no cargue las imagenes
-        errorBuilder: (context, error, stackTrace) {
-          return const Icon(Icons.image_not_supported, size: 100);
-        },
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          return const CircularProgressIndicator();
-        },
+  Padding itemSuperhero(SuperheroDetailsResponse item) => Padding(
+    padding: const EdgeInsets.all(8.0),
+
+    child: GestureDetector(
+      onTap: () => Navigator.push(
+        context, 
+        MaterialPageRoute(builder: (context) => SuperheroDetailScreen(superhero: item))
       ),
-      Text(item.name),
-    ],
+      child: Column(
+        children: [
+          Image.network(
+            item.url,
+            height: 250,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            alignment: Alignment(0, -0.6),
+            //En caso de que no cargue las imagenes
+            errorBuilder: (context, error, stackTrace) {
+              return const Icon(Icons.image_not_supported, size: 100);
+            },
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              }
+              return const CircularProgressIndicator();
+            },
+          ),
+          Text(item.name),
+        ],
+      ),
+    ),
   );
 }
